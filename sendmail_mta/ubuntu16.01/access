@@ -1,0 +1,52 @@
+#Connect:172.25                 RELAY
+#Connect:172.26                 RELAY
+#Connect:172.27                 RELAY
+#Connect:172.28                 RELAY
+#Connect:172.29                 RELAY
+#Connect:172.30                 RELAY
+#Connect:172.31                 RELAY
+#Connect:192.168                        RELAY
+#GreetPause:192.168             0
+#ClientRate:192.168             0
+#ClientConn:192.168             0
+# Defaults
+##GreetPause:                           5000
+##ClientRate:                           10
+##ClientConn:                           10
+#
+# Don't offer AUTH on local network
+#SRV_Features:192.168.1 A
+#
+# Hosts with to allow relaying
+#
+#
+# Hosts that validly forward to me
+#GreetPause:<ip>                0
+#ClientRate:<ip>                30
+#ClientConn:<ip>                0
+#
+# Whitelisted users
+#
+##Spam:postmaster@      FRIEND
+##Spam:abuse@           FRIEND
+##Spam:spam@            FRIEND
+#
+# Blacklisted users
+#
+#Connect:rampellsoft.com 554 Email directly, not through didtheyreadit.com
+#reject@                        REJECT
+#cyberpromo.com REJECT
+#From:MAILER-DAEMON@store2.netvisao.pt REJECT
+#
+# Block invalid IPs
+#
+#Connect:0      REJECT whilst invalid, this also blocks sendmail -bs -Am
+#Connect:169.254 REJECT
+#Connect:192.0.2 REJECT
+#Connect:224            REJECT
+#Connect:255            REJECT
+Connect:localhost.localdomain           RELAY
+Connect:localhost                       RELAY
+Connect:127.0.0.1                       RELAY
+Connect:gmail.com                       RELAY
+Connect:devops-tools                    RELAY
