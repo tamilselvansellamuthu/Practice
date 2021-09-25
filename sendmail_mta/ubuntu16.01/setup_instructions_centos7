@@ -1,0 +1,58 @@
+yum update -y
+cat /etc/redhat-release 
+cat /etc/hostname 
+cat /etc/hosts
+yum install epel-release -y
+yum install sendmail sendmail-cf m4 mailutils mailx -y
+#/etc/mail/auth/gmail-auth/gmail-auth.db creation
+mkdir /etc/mail/auth
+vim /etc/mail/auth/gmail-auth
+AuthInfo: "U:root" "I:tamilcloud1003@gmail.com" "P:Jan@2018"
+cd /etc/mail/auth
+ll
+makemap hash gmail-auth < gmail-auth
+ll
+#/etc/mail/genericstable.db creation
+vim /etc/mail/genericstable
+tamilcloud1003 tamilcloud1003@gmail.com
+tamilcloud1003@localhost.localdomain tamilcloud1003@gmail.com
+cd /etc/mail
+ll
+make -C /etc/mail
+ll
+#sendmail.mc configuration
+vim sendmail.mc 
+#delete last 3 lines
+MAILER(smtp)dnl
+MAILER(procmail)dnl
+dnl MAILER(cyrusv2)dnl
+#Add following lines
+MAILER_DEFINITIONS
+define(`SMART_HOST', `[smtp.gmail.com]')dnl
+define(`RELAY_MAILER_ARGS', `TCP $h 587')dnl
+define(`ESMTP_MAILER_ARG', `TCP $h 587')dnl
+define(`confAUTH_OPTIONS', `A p y')dnl
+TRUST_AUTH_MECH(`EXTERNAL DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+define(`confAUTH_MECHANISMS', `EXTERNAL GSS-API DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+FEATURE(`genericstable', `hash -o /etc/mail/genericstable.db')dnl
+FEATURE(`authinfo', `hash -o /etc/mail/auth/gmail-auth.db')dnl
+MAILER(`local')dnl
+MAILER(`smtp')dnl
+DAEMON=no
+systemctl restart sendmail
+systemctl enable sendmail
+vim test.sh
+#!/bin/sh
+TO=tamilcloud1003@gmail.com
+# -i - donot treat special lines staring with "."
+# -v - use verboose mode (provide SMTP session transcript)
+# -Am - use sendmail.cf (do not send via localhost:25) - requires root privileges
+/usr/sbin/sendmail -i -v -Am -- $TO <<END
+Subject: Delivery Test
+To: $TO
+
+
+Delivery test.
+END
+
+#Allow less secure apps: OFF - gmail-auth
