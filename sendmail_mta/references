@@ -1,7 +1,8 @@
+#### Setup sendmail MTA ####
 https://www.youtube.com/watch?v=II3C3VlGboE
 https://netcorecloud.com/tutorials/install-sendmail-server-centos-7/
 https://docs.oracle.com/en/operating-systems/oracle-linux/6/admin/configure-sendmail.html
 https://access.redhat.com/solutions/60803
 
-#Allow less secure apps and disable captcha
+#### Allow less secure apps and disable captcha ####
 https://support.google.com/mail/answer/7126229?visit_id=637681839539298137-2770095176&rd=2#cantsignin&zippy=%2Ci-cant-sign-in-to-my-email-client
